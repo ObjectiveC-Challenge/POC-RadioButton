@@ -6,9 +6,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RadioButton.h"
 
-@interface ViewController : UIViewController
-
+@interface ViewController : UIViewController {
+    RadioButton *radioButton;
+}
 
 @end
 

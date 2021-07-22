@@ -15,6 +15,7 @@
 		88FA5BAF26A9935000C746E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FA5BAE26A9935000C746E1 /* main.m */; };
 		88FA5BB926A9935000C746E1 /* POC_RadioButtonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FA5BB826A9935000C746E1 /* POC_RadioButtonTests.m */; };
 		88FA5BC426A9935000C746E1 /* POC_RadioButtonUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FA5BC326A9935000C746E1 /* POC_RadioButtonUITests.m */; };
+		88FA5BD326A9AE6B00C746E1 /* RadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FA5BD226A9AE6B00C746E1 /* RadioButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,8 @@
 		88FA5BBF26A9935000C746E1 /* POC-RadioButtonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "POC-RadioButtonUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88FA5BC326A9935000C746E1 /* POC_RadioButtonUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POC_RadioButtonUITests.m; sourceTree = "<group>"; };
 		88FA5BC526A9935100C746E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88FA5BD126A9AE6B00C746E1 /* RadioButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RadioButton.h; sourceTree = "<group>"; };
+		88FA5BD226A9AE6B00C746E1 /* RadioButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RadioButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +115,8 @@
 				88FA5BAA26A9935000C746E1 /* LaunchScreen.storyboard */,
 				88FA5BAD26A9935000C746E1 /* Info.plist */,
 				88FA5BAE26A9935000C746E1 /* main.m */,
+				88FA5BD126A9AE6B00C746E1 /* RadioButton.h */,
+				88FA5BD226A9AE6B00C746E1 /* RadioButton.m */,
 			);
 			path = "POC-RadioButton";
 			sourceTree = "<group>";
@@ -264,6 +269,7 @@
 			files = (
 				88FA5BA426A9934D00C746E1 /* ViewController.m in Sources */,
 				88FA5B9E26A9934D00C746E1 /* AppDelegate.m in Sources */,
+				88FA5BD326A9AE6B00C746E1 /* RadioButton.m in Sources */,
 				88FA5BAF26A9935000C746E1 /* main.m in Sources */,
 				88FA5BA126A9934D00C746E1 /* SceneDelegate.m in Sources */,
 			);
