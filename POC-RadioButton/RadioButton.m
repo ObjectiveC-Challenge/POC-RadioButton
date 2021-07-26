@@ -41,22 +41,27 @@
 }
 
 -(void) baseInit {
-    button = [UIButton buttonWithType:UIButtonTypeCustom];
-    label = [[UILabel alloc] init];
-    isSelect = NO;
-    
     multiplier = 0.5;
     selectedColor = [UIColor blackColor];
     unselectedColor = [UIColor grayColor];
     fontColor = [UIColor blackColor];
+    buttons = [[NSArray alloc] init];
+    selectedButton = -1;
 }
 
 -(void)wasTapped:(UIButton*)sender {
-    isSelect = !isSelect;
-    NSString *iconName = isSelect? @"largecircle.fill.circle" : @"circle";
-    UIColor *colorButton = isSelect? selectedColor: unselectedColor;
-    button.tintColor = colorButton;
-    [button setBackgroundImage:[UIImage systemImageNamed:iconName] forState:(UIControlStateNormal)];
+    if(selectedButton >= 0) {
+        UIButton* button = buttons[selectedButton];
+        [button setBackgroundImage:[UIImage systemImageNamed:@"circle"] forState:(UIControlStateNormal)];
+        button.tintColor = unselectedColor;
+    }
+    selectedButton = [sender tag] - 1;
+    [sender setBackgroundImage:[UIImage systemImageNamed:@"largecircle.fill.circle"] forState:(UIControlStateNormal)];
+    sender.tintColor = selectedColor;
+}
+
+-(NSString*)getSelectedLabel {
+    return selectedButton < 0 ? nil : names[selectedButton];
 }
 
 - (void)setOptions:(NSArray *)namesP {
@@ -69,6 +74,7 @@
     
     for (int i = 0; i < names.count; i++) {
         UIButton *newButton = [self setUpButton];
+        [newButton setTag:i+1];
         UILabel *newLabel = [self setUpLabel:names[i]];
         
         [self setUPConstraints:newButton withLabel:newLabel withXPosition:step+(columnSize*i)];
@@ -88,6 +94,9 @@
     [newButton setBackgroundImage:[UIImage systemImageNamed:@"circle"] forState:(UIControlStateNormal)];
     newButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     newButton.tintColor = unselectedColor;
+    
+    buttons = [buttons arrayByAddingObject:newButton];
+    
     return newButton;
 }
 

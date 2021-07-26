@@ -8,17 +8,17 @@
 #import <UIKit/UIKit.h>
 
 @interface RadioButton: UIView{
-    UIButton *button;
-    UILabel *label;
     CGFloat multiplier;
-    UIColor *selectedColor,*unselectedColor, *fontColor;
-    BOOL isSelect;
+    UIColor *selectedColor, *unselectedColor, *fontColor;
     NSArray *names;
+    NSArray *buttons;
+    long selectedButton;
 }
+@property (readonly) NSArray *buttons;
+@property (readonly) long selectedButton;
 
 -(instancetype)initWithMultiplier:(CGFloat)multiplierP selectedColor:(UIColor*)selectedColorP unselectedColor:(UIColor*)unselectedColorP fontColor:(UIColor*)fontColorP;
 -(void)setOptions:(NSArray*)namesP;
--(void)setUpRadioButtons;
--(void) setUPConstraints:(UIButton*)newButton withLabel:(UILabel*)newLabel withXPosition:(CGFloat)xPosition;
+-(NSString*)getSelectedLabel;
 @end
 
