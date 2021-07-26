@@ -9,6 +9,16 @@
 
 @implementation RadioButton: UIView
 
+- (instancetype)initWithMultiplier:(CGFloat)multiplierP selectedColor:(UIColor *)selectedColorP unselectedColor:(UIColor *)unselectedColorP fontColor:(UIColor *)fontColorP {
+    if ((self = [super init])) {
+        multiplier = multiplierP;
+        selectedColor = selectedColorP;
+        unselectedColor = unselectedColorP;
+        fontColor = fontColorP;
+    }
+    return self;
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -25,52 +35,84 @@
     return self;
 }
 
-
 - (void)layoutSubviews {
     [super layoutSubviews];
-    [self setButton];
-    [self setLabel];
-    [self setConstraints];
+    [self setUpRadioButtons];
 }
 
 -(void) baseInit {
     button = [UIButton buttonWithType:UIButtonTypeCustom];
     label = [[UILabel alloc] init];
-}
-
--(void) setButton {
-    [button addTarget:self
-            action:@selector(wasTapped:)
-            forControlEvents:UIControlEventTouchUpInside
-     ];
-    button.frame = CGRectMake(200, 200, 200, 200);
-    [button setTitleColor:[UIColor blueColor] forState:(UIControlStateNormal)];
-    [button setBackgroundImage:[UIImage systemImageNamed:@"circle"] forState:(UIControlStateNormal)];
-    button.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self addSubview:button];
-}
-
--(void) setLabel {
-    label.text = @"João";
-    label.textColor = [UIColor blackColor];
-    label.textAlignment = NSTextAlignmentLeft;
-    [self addSubview:label];
-}
-
--(void) setConstraints {
-    button.translatesAutoresizingMaskIntoConstraints = NO;
-    [button.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = YES;
-    [button.topAnchor constraintEqualToAnchor:self.topAnchor constant:10].active = YES;
-    [button.heightAnchor constraintEqualToAnchor:self.heightAnchor multiplier:0.5].active = YES;
-    [button.widthAnchor constraintEqualToConstant:button.frame.size.height].active = YES;
+    isSelect = NO;
     
-    label.translatesAutoresizingMaskIntoConstraints = NO;
-    [label.topAnchor constraintEqualToAnchor:button.bottomAnchor constant:5].active = YES;
-    [label.centerXAnchor constraintEqualToAnchor:button.centerXAnchor].active = YES;
+    multiplier = 0.5;
+    selectedColor = [UIColor blackColor];
+    unselectedColor = [UIColor grayColor];
+    fontColor = [UIColor blackColor];
 }
 
 -(void)wasTapped:(UIButton*)sender {
-    [button setBackgroundImage:[UIImage systemImageNamed:@"largecircle.fill.circle"] forState:(UIControlStateNormal)];
+    isSelect = !isSelect;
+    NSString *iconName = isSelect? @"largecircle.fill.circle" : @"circle";
+    UIColor *colorButton = isSelect? selectedColor: unselectedColor;
+    button.tintColor = colorButton;
+    [button setBackgroundImage:[UIImage systemImageNamed:iconName] forState:(UIControlStateNormal)];
+}
+
+- (void)setOptions:(NSArray *)namesP {
+    names = namesP;
+}
+
+-(void)setUpRadioButtons {
+    CGFloat columnSize = self.frame.size.width / names.count;
+    CGFloat step = columnSize/2;
+    
+    for (int i = 0; i < names.count; i++) {
+        UIButton *newButton = [self setUpButton];
+        UILabel *newLabel = [self setUpLabel:names[i]];
+        
+        [self setUPConstraints:newButton withLabel:newLabel withXPosition:step+(columnSize*i)];
+    }
+}
+
+
+-(UIButton*) setUpButton {
+    UIButton *newButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    [newButton addTarget:self
+            action:@selector(wasTapped:)
+            forControlEvents:UIControlEventTouchUpInside
+     ];
+
+    [newButton setTitleColor:[UIColor blueColor] forState:(UIControlStateNormal)];
+    [newButton setBackgroundImage:[UIImage systemImageNamed:@"circle"] forState:(UIControlStateNormal)];
+    newButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    newButton.tintColor = unselectedColor;
+    return newButton;
+}
+
+-(UILabel*) setUpLabel: (NSString*)name {
+    UILabel *newLabel = [[UILabel alloc] init];
+    newLabel.text = name;
+    newLabel.textColor = fontColor;
+    newLabel.textAlignment = NSTextAlignmentLeft;
+    return newLabel;
+}
+
+-(void) setUPConstraints:(UIButton*)newButton withLabel:(UILabel*)newLabel withXPosition:(CGFloat)xPosition {
+    [self addSubview:newButton];
+    [self addSubview:newLabel];
+
+    newButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [newButton.centerXAnchor constraintEqualToAnchor:self.leftAnchor constant:xPosition].active = YES;
+    [newButton.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
+    [newButton.heightAnchor constraintEqualToAnchor:self.heightAnchor multiplier:multiplier].active = YES;
+    [newButton.widthAnchor constraintEqualToAnchor:self.heightAnchor multiplier:multiplier].active = YES;
+    
+    newLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [newLabel.topAnchor constraintEqualToAnchor:newButton.bottomAnchor constant:5].active = YES;
+    [newLabel.centerXAnchor constraintEqualToAnchor:newButton.centerXAnchor].active = YES;
+    [newLabel.widthAnchor constraintLessThanOrEqualToConstant: (self.frame.size.width/names.count)-5].active = YES;
 }
 
 @end
